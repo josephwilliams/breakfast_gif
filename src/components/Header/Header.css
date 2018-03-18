@@ -29,3 +29,24 @@
   height: 60px;
   margin-left: 10px;
 }
+
+.linksContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerLink {
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.headerLink:hover {
+  background: #fbfc89;
+}
+
+.headerLink:active {
+  background: #f4f56f;
+}

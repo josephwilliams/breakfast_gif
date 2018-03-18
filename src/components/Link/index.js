@@ -5,7 +5,7 @@ import { routeActions } from 'redux-simple-router';
 
 import { PAGE_ROUTES } from 'pages/routes';
 
-import './Links.css';
+import './Link.css';
 
 
 const Link = ({ children, dispatch, route }) => (
@@ -17,9 +17,7 @@ const Link = ({ children, dispatch, route }) => (
   </span>
 );
 
-Link.displayName = 'Link';
-
-Link.PropTypes = {
+Link.propTypes = {
   dispatch: PropTypes.func.isRequired,
   route: PropTypes.oneOf(PAGE_ROUTES).isRequired,
   children: PropTypes.node.isRequired,
