@@ -1,0 +1,15 @@
+.gridWrapper {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingIcon {
+  margin-top: 40px;
+}
+
+.gridContentWrapper {
+  max-width: 720px;
+}
