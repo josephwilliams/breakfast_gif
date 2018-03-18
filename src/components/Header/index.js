@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
 
 import Link from 'components/Link';
 
@@ -12,22 +15,22 @@ import logoSrc from 'assets/images/moving_toast.gif';
 import './Header.css';
 
 
-const Header = () => (
+const Header = ({ dispatch }) => (
   <div className={'headerWrapper'}>
     <div className={'headerContentWrapper'}>
-      <div className={'titleContainer'}>
-        <Link dispatch={() => {}} route={ROUTE_HOME_PAGE}>
+      <Link dispatch={dispatch} route={ROUTE_HOME_PAGE}>
+        <div className={'titleContainer'}>
           {'breakfast gif'}
-        </Link>
-        <img src={logoSrc} className={'logo'} alt={'breakfast gif'} />
-      </div>
+          <img src={logoSrc} className={'logo'} alt={'breakfast gif'} />
+        </div>
+      </Link>
       <div className={'linksContainer'}>
         <div className={'headerLink'}>
           {'Search'}
         </div>
         <div className={'headerLink'}>
           <Link
-            dispatch={() => {}}
+            dispatch={dispatch}
             route={ROUTE_FAVORITES_PAGE}
           >
             {'Favorites'}
@@ -47,4 +50,10 @@ const Header = () => (
   </div>
 );
 
-export default Header;
+Header.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+const HeaderConnected = connect()(Header);
+
+export default HeaderConnected;

@@ -17,7 +17,7 @@
 .titleContainer {
   display: flex;
   flex-flow: row nowrap;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: flex-start;
 
   font-size: 40px;
