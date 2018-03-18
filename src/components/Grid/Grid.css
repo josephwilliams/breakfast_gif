@@ -2,12 +2,19 @@
   width: 100%;
 
   display: flex;
+  flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
 }
 
 .loadingIcon {
   margin-top: 40px;
+}
+
+.loadingText {
+  margin-top: 6px;
+  font-family: 'Sacramento', cursive;
+  font-size: 30px;
 }
 
 .gridContentWrapper {

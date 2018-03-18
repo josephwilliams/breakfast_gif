@@ -26,9 +26,6 @@ const Header = ({ dispatch }) => (
       </Link>
       <div className={'linksContainer'}>
         <div className={'headerLink'}>
-          {'Search'}
-        </div>
-        <div className={'headerLink'}>
           <Link route={ROUTE_FAVORITES_PAGE}>
             {'Favorites'}
           </Link>
