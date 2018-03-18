@@ -3,3 +3,8 @@ html, body {
   padding: 0;
   font-family: 'Hind Vadodara', sans-serif;
 }
+
+a {
+  color: black;
+  text-decoration: none;
+}
