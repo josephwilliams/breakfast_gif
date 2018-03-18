@@ -18,7 +18,7 @@ import './Header.css';
 const Header = ({ dispatch }) => (
   <div className={'headerWrapper'}>
     <div className={'headerContentWrapper'}>
-      <Link dispatch={dispatch} route={ROUTE_HOME_PAGE}>
+      <Link route={ROUTE_HOME_PAGE}>
         <div className={'titleContainer'}>
           {'breakfast gif'}
           <img src={logoSrc} className={'logo'} alt={'breakfast gif'} />
@@ -29,10 +29,7 @@ const Header = ({ dispatch }) => (
           {'Search'}
         </div>
         <div className={'headerLink'}>
-          <Link
-            dispatch={dispatch}
-            route={ROUTE_FAVORITES_PAGE}
-          >
+          <Link route={ROUTE_FAVORITES_PAGE}>
             {'Favorites'}
           </Link>
         </div>

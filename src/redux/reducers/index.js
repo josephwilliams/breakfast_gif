@@ -3,6 +3,8 @@ import { combineReducers } from 'redux';
 import giphyReducer from 'redux/reducers/giphy.js';
 
 
-export default combineReducers({
+const reducers = combineReducers({
   giphyReducer,
 });
+
+export default reducers;

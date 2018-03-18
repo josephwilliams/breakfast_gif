@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { routeActions } from 'redux-simple-router';
+import { Link } from 'react-router-dom';
 
 import { PAGE_ROUTES } from 'pages/routes';
 
 import './Link.css';
 
 
-const Link = ({ children, dispatch, route }) => (
-  <span
-    className={'linkWrapper'}
-    onClick={() => dispatch(routeActions.push(route))}
-  >
-    {children}
-  </span>
+const PageLink = ({ children, route }) => (
+  <Link to={route}>
+    <span className={'linkWrapper'}>
+      {children}
+    </span>
+  </Link>
 );
 
-Link.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+PageLink.propTypes = {
   route: PropTypes.oneOf(PAGE_ROUTES).isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default Link;
+export default PageLink;
