@@ -5,7 +5,11 @@ import './Header.css';
 
 const Header = () => (
   <div className={'headerWrapper'}>
-    {'header'}
+    <div className={'headerContentWrapper'}>
+      <div className={'titleContainer'}>
+        {'breakfast gif'}
+      </div>
+    </div>
   </div>
 );
 

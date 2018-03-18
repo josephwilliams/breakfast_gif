@@ -1,0 +1,25 @@
+.headerWrapper {
+  height: 80px;
+  border-top: 10px solid #fbfb89;
+  padding-top: 5px;
+}
+
+.headerContentWrapper {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+
+  font-size: 40px;
+  font-family: 'Sacramento', cursive;
+}
