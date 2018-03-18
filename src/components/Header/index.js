@@ -19,7 +19,7 @@ const Header = () => (
         <Link dispatch={() => {}} route={ROUTE_HOME_PAGE}>
           {'breakfast gif'}
         </Link>
-        <img src={logoSrc} className={'logo'} />
+        <img src={logoSrc} className={'logo'} alt={'breakfast gif'} />
       </div>
       <div className={'linksContainer'}>
         <div className={'headerLink'}>
