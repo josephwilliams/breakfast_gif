@@ -23,3 +23,9 @@
   font-size: 40px;
   font-family: 'Sacramento', cursive;
 }
+
+.logo {
+  width: 60px;
+  height: 60px;
+  margin-left: 10px;
+}
