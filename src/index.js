@@ -40,9 +40,8 @@ reduxRouterMiddleware.listenForReplays(store);
 const App = (
   <Provider store={store}>
     <Router history={browserHistory}>
-      {/* <Route path={ROUTE_HOME_PAGE} component={HomePage}>
+      <Route path={ROUTE_HOME_PAGE} component={HomePage}>
         <Route path={ROUTE_FAVORITES_PAGE} component={FavoritesPage} />
-        */}
       </Route>
     </Router>
   </Provider>
