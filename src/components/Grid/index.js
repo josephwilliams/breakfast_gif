@@ -24,27 +24,12 @@ class Grid extends Component {
     this.props.dispatch(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED));
   }
 
-  shouldComponentUpdate(nextProps) {
-    console.log('>> shouldComponentUpdate', this.props === nextProps);
-    return this.props !== nextProps;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('>>>>>>>>>>>> componentWillReceiveProps PROPS', nextProps);
-  }
-
   render() {
     const {
       isLoadingList,
       listLoadError,
       list,
     } = this.props;
-
-    console.log(
-      '>> isLoadingList', this.props.isLoadingList,
-      '>> list', list,
-      '>> error', listLoadError
-    );
 
     // TODO: Create error UI. For now, just showing loading UI if loading, error, or empty list.
     const shouldShowLoadingUI = (
@@ -66,8 +51,8 @@ class Grid extends Component {
           : (
             <div className={'gridContentWrapper'}>
               {list.map((listItem) => (
-                <div className={'gridCardWrapper'}>
-                  <Card data={listItem} key={listItem.id} />
+                <div className={'gridCardWrapper'} key={listItem.id}>
+                  <Card data={listItem} />
                 </div>
               ))}
             </div>

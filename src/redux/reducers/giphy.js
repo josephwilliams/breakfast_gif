@@ -6,7 +6,7 @@ import {
 
 
 // store key
-const STORE_KEY = 'GIPHY_STORE_KEY';
+export const STORE_KEY = 'GIPHY_STORE_KEY';
 
 // initial state
 const initialState = {
