@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import SearchInput from 'components/SearchInput';
 import Link from 'components/Link';
 
 import {
@@ -25,6 +26,7 @@ const Header = ({ dispatch }) => (
         </div>
       </Link>
       <div className={'linksContainer'}>
+        <SearchInput />
         <div className={'headerLink'}>
           <Link route={ROUTE_FAVORITES_PAGE}>
             {'Favorites'}

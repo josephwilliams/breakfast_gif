@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { ACTION_LOAD_GIPHY_SEARCH_RESULTS_LIST_REQUESTED } from 'redux/actions/giphy.js';
@@ -19,7 +19,10 @@ class SearchInput extends Component {
 
   updateSearchInputText = (event) => {
     const updatedSearchInputText = event.target.value;
-    this.setState({ searchInputText: updatedSearchInputText });
+    // NOTE: ensure that search input value is at least one character (and exists).
+    if (event.target.value) {
+      this.setState({ searchInputText: updatedSearchInputText });
+    }
   }
 
   handleClickSearch = () => {

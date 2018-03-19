@@ -14,6 +14,8 @@ import {
   ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS,
   ACTION_LOAD_TRENDING_GIPHY_LIST_ERROR,
 
+  ACTION_LOAD_GIPHY_SEARCH_RESULTS_LIST_REQUESTED,
+
   ACTION_ADD_GIF_TO_FAVORITES_REQUESTED,
   ACTION_ADD_GIF_TO_FAVORITES_STARTED,
   ACTION_ADD_GIF_TO_FAVORITES_SUCCESS,
@@ -39,12 +41,13 @@ async function fetchGiphyList(giphyApiUrl, queryString = '') {
   }
 }
 
-function* handleLoadTrendingGiphyListRequested() {
+function* handleLoadTrendingGiphyListRequested(action) {
+  console.log('>> action', action);
   yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED));
   try {
     const giphyApiUrl = process.env.REACT_APP_GIPHY_API_URL;
 
-    const list = yield fetchGiphyList(giphyApiUrl, 'limit=10');
+    const list = yield fetchGiphyList(giphyApiUrl);
 
     yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS, {
       list: list,
@@ -94,14 +97,26 @@ function* watchLoadTrendingGiphyListRequested() {
   );
 }
 
+function* watchLoadGiphySearchResultsListRequested() {
+  yield takeLatest(
+    ACTION_LOAD_GIPHY_SEARCH_RESULTS_LIST_REQUESTED,
+    handleLoadTrendingGiphyListRequested,
+    { isSearch: true },
+  );
+}
+
 function* watchAddGifToFavoritesRequested() {
-  yield takeEvery(ACTION_ADD_GIF_TO_FAVORITES_REQUESTED, handleAddGifToFavoritesRequested);
+  yield takeEvery(
+    ACTION_ADD_GIF_TO_FAVORITES_REQUESTED,
+    handleAddGifToFavoritesRequested
+  );
 }
 
 function* giphySaga(...args) {
   yield all([
     fork(watchLoadTrendingGiphyListRequested, ...args),
     fork(watchAddGifToFavoritesRequested, ...args),
+    fork(watchLoadGiphySearchResultsListRequested, ...args),
   ]);
 }
 
