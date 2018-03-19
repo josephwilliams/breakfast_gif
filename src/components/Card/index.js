@@ -4,6 +4,7 @@ import React from 'react';
 import './Card.css';
 
 
+// TODO: add 'add to favorite' button UI to card, dispatching action.
 const Card = () => {
   return (
     <div className={'cardWrapper'}>
@@ -12,6 +13,7 @@ const Card = () => {
   );
 }
 
+// TODO: add propTypes for necessary props, e.g. image url.
 // Card.propTypes = {
 // };
 
