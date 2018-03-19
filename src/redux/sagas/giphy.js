@@ -21,6 +21,9 @@ import {
   ACTION_LOAD_GIPHY_SEARCH_RESULTS_LIST_REQUESTED,
 
   ACTION_ADD_GIF_TO_FAVORITES_REQUESTED,
+  ACTION_ADD_GIF_TO_FAVORITES_SUCCESS,
+  ACTION_ADD_GIF_TO_FAVORITES_ERROR,
+
   ACTION_LOAD_GIPHY_FAVORITES_LIST_REQUESTED,
 } from 'redux/actions/giphy.js';
 
@@ -90,24 +93,35 @@ function* handleLoadGiphyListRequested(action) {
   }
 }
 
-function handleAddGifToFavoritesRequested(action) {
+function* handleAddGifToFavoritesRequested(action) {
+  // NOTE: this generator function and its actions are more to creating an observable timeline of events rather than to affect UI.
   const gifId = action.payload.gifId;
+  try {
+    const previousFavoriteGifIds = Cookies.get('favoriteGifIds');
 
-  const previousFavoriteGifIds = Cookies.get('favoriteGifIds');
+    // if no previous 'previousFavoriteGifIds' cookie set, create one.
+    if (!previousFavoriteGifIds) {
+      Cookies.set('favoriteGifIds', [gifId]);
+    }
 
-  // TODO: consider setting try/catch block here and throwing error in case of following conditionals.
+    // if gif id isn't already set, add it to cookie
+    if (!Cookies.get('favoriteGifIds').includes(gifId)) {
+      const updatedFavoriteGifIds = JSON.parse(previousFavoriteGifIds);
+      updatedFavoriteGifIds.push(gifId);
+      Cookies.set('favoriteGifIds', updatedFavoriteGifIds);
+    }
+    else {
+      throw new Error('favoriteGifs Cookie already contains gifId');
+    }
 
-  // if no previous 'previousFavoriteGifIds' cookie set, create one.
-  if (!previousFavoriteGifIds) {
-    console.log('>> NO previousFavoriteGifIds');
-    Cookies.set('favoriteGifIds', [gifId]);
-  }
-
-  // if gif id isn't already set, add it to cookie
-  if (!Cookies.get('favoriteGifIds').includes(gifId)) {
-    const updatedFavoriteGifIds = JSON.parse(previousFavoriteGifIds);
-    updatedFavoriteGifIds.push(gifId);
-    Cookies.set('favoriteGifIds', updatedFavoriteGifIds);
+    yield put(makeAction(ACTION_ADD_GIF_TO_FAVORITES_SUCCESS, {
+      gifId: gifId,
+    }));
+  } catch (error) {
+    yield put(makeAction(ACTION_ADD_GIF_TO_FAVORITES_ERROR, {
+      error: error,
+      gifId: gifId,
+    }));
   }
 }
 
