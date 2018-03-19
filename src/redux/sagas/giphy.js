@@ -6,6 +6,8 @@ import {
   takeLatest,
 } from 'redux-saga/effects';
 
+import lodashGet from 'lodash/get';
+
 import superagent from 'superagent';
 
 import {
@@ -25,13 +27,19 @@ import {
 import makeAction from 'redux/utils.js';
 
 
-// NOTE: passing giphyApiUrl to be able to use different base urls for trending vs. search.
-async function fetchGiphyList(giphyApiUrl, queryString = '') {
+async function fetchGiphyList(isSearch = false, extraQueryStrings = '') {
   // TODO: This is sloppy. Clean this up. Pass query strings as options object with key/value pairs and then join them perhaps.
+  const queryType = isSearch ? 'search' : 'trending';
   const apiKeyQueryString = 'api_key=' + process.env.REACT_APP_GIPHY_API_KEY;
-  const apiUrlWithQueryString = giphyApiUrl + '?' + apiKeyQueryString + '&limit=32';
 
-  const res = await superagent.get(apiUrlWithQueryString);
+  let giphyApiUrl = process.env.REACT_APP_GIPHY_API_URL;
+  giphyApiUrl += queryType;
+  giphyApiUrl += '?';
+  giphyApiUrl += apiKeyQueryString;
+  giphyApiUrl += '&limit=32';
+  giphyApiUrl += extraQueryStrings;
+
+  const res = await superagent.get(giphyApiUrl);
 
   if (res.body && res.body.data) {
     return res.body.data;
@@ -45,9 +53,10 @@ function* handleLoadTrendingGiphyListRequested(action) {
   console.log('>> action', action);
   yield put(makeAction(ACTION_LOAD_GIPHY_LIST_STARTED));
   try {
-    const giphyApiUrl = process.env.REACT_APP_GIPHY_API_URL;
+    const searchInput = lodashGet(action, 'payload.searchInput');
+    const isSearch = !!searchInput;
 
-    const list = yield fetchGiphyList(giphyApiUrl);
+    const list = yield fetchGiphyList(isSearch, searchInput);
 
     yield put(makeAction(ACTION_LOAD_GIPHY_LIST_SUCCESS, {
       list: list,
@@ -101,7 +110,6 @@ function* watchLoadGiphySearchResultsListRequested() {
   yield takeLatest(
     ACTION_LOAD_GIPHY_SEARCH_RESULTS_LIST_REQUESTED,
     handleLoadTrendingGiphyListRequested,
-    { isSearch: true },
   );
 }
 
