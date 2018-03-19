@@ -5,13 +5,21 @@ import { connect } from 'react-redux';
 import Card from 'components/Card';
 import GifModal from 'components/GifModal';
 
-import { ACTION_LOAD_GIPHY_LIST_REQUESTED } from 'redux/actions/giphy.js';
+import {
+  ACTION_LOAD_GIPHY_LIST_REQUESTED,
+  ACTION_LOAD_GIPHY_FAVORITES_LIST_REQUESTED,
+} from 'redux/actions/giphy.js';
 
 import {
   extractGiphyStateIsLoadingList,
   extractGiphyStateList,
   extractGiphyStateListLoadError,
 } from 'redux/reducers/giphy.js';
+
+import {
+  PAGE_ROUTES,
+  ROUTE_HOME_PAGE,
+} from 'pages/routes';
 
 import loadingGif from 'assets/images/moving_breakfast.gif';
 
@@ -31,15 +39,22 @@ class Grid extends Component {
   }
 
   loadGiphyData = () => {
-
-    this.props.dispatch(makeAction(ACTION_LOAD_GIPHY_LIST_REQUESTED));
+    const { dispatch, page } = this.props;
+    return (
+      page === ROUTE_HOME_PAGE
+        ? dispatch(makeAction(ACTION_LOAD_GIPHY_LIST_REQUESTED))
+        : dispatch(makeAction(ACTION_LOAD_GIPHY_FAVORITES_LIST_REQUESTED))
+    );
   }
 
   componentDidMount() {
     this.loadGiphyData();
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.page !== nextProps.page) {
+      this.loadGiphyData();
+    }
   }
 
   openModal = (gifId) => {
@@ -115,6 +130,7 @@ Grid.propTypes = {
   isLoadingList: PropTypes.bool.isRequired,
   listLoadError: PropTypes.bool.isRequired,
   list: PropTypes.array,
+  page: PropTypes.oneOf(PAGE_ROUTES),
 };
 
 const GridConnected = connect(
