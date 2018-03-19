@@ -11,7 +11,10 @@ import {
   ROUTE_FAVORITES_PAGE,
 } from 'pages/routes';
 
-import { ACTION_LOAD_GIPHY_LIST_REQUESTED } from 'redux/actions/giphy.js';
+import {
+  ACTION_LOAD_GIPHY_LIST_REQUESTED,
+  ACTION_LOAD_GIPHY_FAVORITES_LIST_REQUESTED,
+} from 'redux/actions/giphy.js';
 
 import logoSrc from 'assets/images/moving_toast.gif';
 
@@ -21,9 +24,13 @@ import './Header.css';
 
 
 const Header = ({ dispatch }) => {
-  // NOTE: this is not-so-elegant solution to reload trending gifs after search by clicked implied 'Home' link.
+  // NOTE: the following two functions are not-so-elegant solution to reload trending/favorite gifs after search by clicked implied 'Home' link or Favorites Link.
   const loadTrendingGiphys = () => (
     dispatch(makeAction(ACTION_LOAD_GIPHY_LIST_REQUESTED))
+  );
+
+  const loadFavoriteGiphys = () => (
+    dispatch(makeAction(ACTION_LOAD_GIPHY_FAVORITES_LIST_REQUESTED))
   );
 
   return (
@@ -37,7 +44,7 @@ const Header = ({ dispatch }) => {
         </Link>
         <div className={'linksContainer'}>
           <SearchInput />
-          <div className={'headerLink'}>
+          <div className={'headerLink'} onClick={loadFavoriteGiphys}>
             <Link route={ROUTE_FAVORITES_PAGE}>
               {'Favorites'}
             </Link>
