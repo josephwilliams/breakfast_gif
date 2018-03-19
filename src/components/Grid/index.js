@@ -30,8 +30,16 @@ class Grid extends Component {
     };
   }
 
-  componentDidMount() {
+  loadGiphyData = () => {
+
     this.props.dispatch(makeAction(ACTION_LOAD_GIPHY_LIST_REQUESTED));
+  }
+
+  componentDidMount() {
+    this.loadGiphyData();
+  }
+
+  componentWillReceiveProps() {
   }
 
   openModal = (gifId) => {
