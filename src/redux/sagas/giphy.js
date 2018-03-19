@@ -90,7 +90,7 @@ function* handleLoadGiphyListRequested(action) {
   }
 }
 
-function* handleAddGifToFavoritesRequested(action) {
+function handleAddGifToFavoritesRequested(action) {
   const gifId = action.payload.gifId;
 
   const previousFavoriteGifIds = Cookies.get('favoriteGifIds');
