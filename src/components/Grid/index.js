@@ -50,11 +50,13 @@ class Grid extends Component {
           )
           : (
             <div className={'gridContentWrapper'}>
-              {list.map((listItem) => (
-                <div className={'gridCardWrapper'} key={listItem.id}>
-                  <Card data={listItem} />
-                </div>
-              ))}
+              {list.map((listItem) => {
+                const gifTitle = listItem.title;
+                const gifUrls = listItem.images;
+                return (
+                  <Card imageUrls={gifUrls} title={gifTitle} key={listItem.id}/>
+                );
+              })}
             </div>
           )
         }
@@ -72,7 +74,6 @@ Grid.propTypes = {
 
 const GridConnected = connect(
   (globalState) => {
-    // console.log('>> globalState', globalState, globalState.giphyReducer);
     return {
       isLoadingList: extractGiphyStateIsLoadingList(globalState),
       listLoadError: !!extractGiphyStateListLoadError(globalState),

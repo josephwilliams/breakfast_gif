@@ -5,6 +5,8 @@
   flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
+
+  margin-bottom: 50px;
 }
 
 .loadingIcon {
@@ -18,13 +20,9 @@
 }
 
 .gridContentWrapper {
-  max-width: 720px;
+  max-width: 840px;
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
   justify-content: flex-start;
-}
-
-.gridCardWrapper {
-  padding: 10px;
 }

@@ -22,7 +22,7 @@ import makeAction from 'redux/utils.js';
 async function fetchGiphyList(giphyApiUrl, queryString = '') {
   // TODO: This is sloppy. Clean this up. Pass query strings as options object with key/value pairs and then join them perhaps.
   const apiKeyQueryString = 'api_key=' + process.env.REACT_APP_GIPHY_API_KEY;
-  const apiUrlWithQueryString = giphyApiUrl + '?' + apiKeyQueryString + '&limit=20';
+  const apiUrlWithQueryString = giphyApiUrl + '?' + apiKeyQueryString + '&limit=32';
 
   const res = await superagent.get(apiUrlWithQueryString);
 
