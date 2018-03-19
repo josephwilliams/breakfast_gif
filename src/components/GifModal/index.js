@@ -18,12 +18,14 @@ const customStyles = {
     marginRight           : '-50%',
     transform             : 'translate(-50%, -50%)',
     border                : 'none',
+    borderTop             : '10px solid #fbfc89',
+    borderBottom          : '10px solid #fbfc89',
   }
 };
 
 Modal.setAppElement('#root');
 
-const GifModal = ({ modalGifId, closeModal, selectedGifData = {} }) => {
+const GifModal = ({ modalGifId, closeModal, selectedGifData }) => {
   // NOTE: if there is a selected 'modalGifId', modal is open. This approach could cause some contention, and admittedly is syntantically less clean than an 'isOpen' bool, but overall works a little better, as you only have to consider a single prop.
 
   const gifData = [
@@ -32,17 +34,16 @@ const GifModal = ({ modalGifId, closeModal, selectedGifData = {} }) => {
       value: selectedGifData.title,
     },
     {
-      title: 'rating',
-      value: selectedGifData.rating,
-    },
-    {
       title: 'user',
       value: selectedGifData.username,
     },
+    {
+      title: 'rating',
+      value: selectedGifData.rating,
+    },
   ];
 
-  const gifUrl = lodashGet(selectedGifData, 'original.url');
-  console.log('>> selectedGifData', selectedGifData);
+  const gifUrl = lodashGet(selectedGifData, 'images.original.url');
 
   return (
     <Modal
@@ -73,6 +74,10 @@ GifModal.propTypes = {
   modalGifId: PropTypes.string,
   closeModal: PropTypes.func,
   selectedGifData: PropTypes.object,
+};
+
+GifModal.defaultProps = {
+  selectedGifData: {},
 };
 
 export default GifModal;

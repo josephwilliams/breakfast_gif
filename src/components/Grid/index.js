@@ -61,7 +61,7 @@ class Grid extends Component {
     );
 
     const selectedGifData = (
-      list && Array.isArray(list) && list.filter((id) => id === modalGifId)
+      list && Array.isArray(list) && list.find((item) => item.id === modalGifId)
     );
 
     return (
@@ -79,7 +79,7 @@ class Grid extends Component {
               <GifModal
                 closeModal={this.closeModal}
                 modalGifId={this.state.modalGifId}
-                gifData={selectedGifData}
+                selectedGifData={selectedGifData}
               />
               {list.map((listItem) => {
                 const gifTitle = listItem.title;
