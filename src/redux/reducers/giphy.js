@@ -4,7 +4,7 @@ import {
   ACTION_LOAD_GIPHY_LIST_ERROR,
 
   ACTION_ADD_GIF_TO_FAVORITES_SUCCESS,
-  ACTION_ADD_GIF_TO_FAVORITES_ERROR,
+
 } from 'redux/actions/giphy.js';
 
 
@@ -19,7 +19,6 @@ const initialState = {
   listLoadError: null,
 
   favoriteGiphyGifsList: [],
-  addToFavoritesError: null,
 };
 
 // state selectors
@@ -69,22 +68,6 @@ function giphyReducer(state = initialState, action) {
         isLoadedList: false,
         listLoadError: action.payload.error,
       };
-
-    case ACTION_ADD_GIF_TO_FAVORITES_SUCCESS:
-      return {
-        ...state,
-        favoriteGiphyGifsList: [
-          ...state.favoriteGiphyGifsList,
-          action.payload.giphyId,
-        ],
-        addToFavoritesError: null,
-      }
-
-    case ACTION_ADD_GIF_TO_FAVORITES_ERROR:
-      return {
-        ...state,
-        addToFavoritesError: action.payload.error,
-      }
 
     default:
       return state;
