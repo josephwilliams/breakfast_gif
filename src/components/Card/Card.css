@@ -1,4 +1,8 @@
-.cardWrapper {
+.gifCard {
+  width: 200px;
+  height: 160px;
+  padding: 5px;
+
   position: relative;
   top: 0;
   transition: top ease 0.5s;
@@ -6,12 +10,6 @@
   cursor: pointer;
 }
 
-.cardWrapper:hover {
+.gifCard:hover {
   top: -2px;
-}
-
-.gifCard {
-  width: 200px;
-  height: 160px;
-  padding: 5px;
 }

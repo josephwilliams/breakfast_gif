@@ -10,13 +10,11 @@ const Card = ({ imageUrls, title }) => {
   const gifUrl = lodashGet(imageUrls, 'fixed_height_downsampled.url');
 
   return (
-    <div className={'cardWrapper'}>
-      <img
-        src={gifUrl}
-        alt={title}
-        className={'gifCard'}
-      />
-    </div>
+    <img
+      src={gifUrl}
+      alt={title}
+      className={'gifCard'}
+    />
   );
 }
 
