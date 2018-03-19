@@ -14,12 +14,26 @@ import {
 // react-router-dom
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+// redux-saga
+import createSagaMiddleware from 'redux-saga';
+
 // redux
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './redux/reducers';
+import { createStore, applyMiddleware } from 'redux';
 
-const store = createStore(reducers);
+import reducers from 'redux/reducers';
+import rootSaga from 'redux/sagas';
+
+// create saga middleware
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+  reducers,
+  applyMiddleware(sagaMiddleware)
+);
+
+// then run the saga
+sagaMiddleware.run(rootSaga);
 
 const App = (
   <Provider store={store}>
