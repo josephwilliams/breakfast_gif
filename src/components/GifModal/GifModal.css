@@ -26,3 +26,15 @@
 .modalInfoRowValue {
   padding: 5px 12px;
 }
+
+.modalAddToFavoritesButton {
+  padding: 5px 12px;
+  border-radius: 5px;
+  width: 115px;
+  background: #fbfc89;
+  cursor: pointer;
+}
+
+.modalAddToFavoritesButton:active {
+  background: #f4f56f;
+}
