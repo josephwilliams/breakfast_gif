@@ -5,7 +5,7 @@
 
 ## Features
 ### Home Page
-The home page features a loading UI and instantiates a GET request to Giphy's API to return trending gifs.
+The home page features a loading UI and instantiates a GET request to Giphy's API to return trending gifs. From the `Grid` component, or the mosaic of giphy gifs, users can click on any gif, opening a modal that displays a larger version of the gif as well as information about it and the option to add it to favorites.
 
 ### Search
 The search input allows users to do a text-based search of Giphy gifs, returning those whose title includes the searched-for word.
