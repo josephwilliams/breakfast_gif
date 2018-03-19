@@ -21,6 +21,18 @@ export function extractGiphyState(globalState) {
   return (globalState[STORE_KEY] || initialState);
 }
 
+export function extractGiphyStateIsLoadingList(globalState) {
+  return extractGiphyState(globalState).isLoadingList;
+}
+
+export function extractGiphyStateListLoadError(globalState) {
+  return extractGiphyState(globalState).isLoadingList;
+}
+
+export function extractGiphyStateList(globalState) {
+  return extractGiphyState(globalState).list;
+}
+
 // reducer
 function giphyReducer(state = initialState, action) {
   switch (action.type) {

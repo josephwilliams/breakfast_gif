@@ -6,7 +6,11 @@ import Card from 'components/Card';
 
 import { ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED } from 'redux/actions/giphy.js';
 
-import { extractGiphyState } from 'redux/reducers/giphy.js';
+import {
+  extractGiphyStateIsLoadingList,
+  extractGiphyStateList,
+  extractGiphyStateListLoadError,
+} from 'redux/reducers/giphy.js';
 
 import loadingGif from 'assets/images/moving_breakfast.gif';
 
@@ -83,11 +87,11 @@ Grid.propTypes = {
 
 const GridConnected = connect(
   (globalState) => {
-    console.log('>> globalState', globalState, globalState.giphyReducer);
+    // console.log('>> globalState', globalState, globalState.giphyReducer);
     return {
-      isLoadingList: extractGiphyState(globalState).isLoadingList,
-      listLoadError: !!extractGiphyState(globalState).listLoadError,
-      list: extractGiphyState(globalState).list,
+      isLoadingList: extractGiphyStateIsLoadingList(globalState),
+      listLoadError: !!extractGiphyStateListLoadError(globalState),
+      list: extractGiphyStateList(globalState),
     };
   }
 )(Grid);
