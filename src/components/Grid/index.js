@@ -13,10 +13,9 @@ import makeAction from 'redux/utils.js';
 import './Grid.css';
 
 
-// TODO: implement conditional UI based on isLoading data or not.
 class Grid extends Component {
   // NOTE: componentWillMount is really for server-side, but is called on browser-side too, I believe. Either way, because we're not server-side rendering, componentDidMount would work the same.
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED));
   }
 
@@ -24,12 +23,12 @@ class Grid extends Component {
     const {
       isLoadingList,
       listLoadError,
-      list,
+      // list,
     } = this.props;
 
     return (
       <div className={'gridWrapper'}>
-        {isLoadingList
+        {isLoadingList || listLoadError
           ? (
             <img
               src={loadingGif}

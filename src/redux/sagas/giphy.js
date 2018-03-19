@@ -1,6 +1,6 @@
 import {
   all,
-  // call,
+  call,
   put,
   fork,
   // takeEvery,
@@ -17,13 +17,31 @@ import {
 import makeAction from 'redux/utils.js';
 
 
-// worker Saga: will be fired on USER_FETCH_REQUESTED actions
+// NOTE: passing giphyApiUrl to be able to use different base urls for trending vs. search.
+async function fetchGiphyList(giphyApiUrl, queryString = '') {
+  const giphyApiKey = process.env.REACT_APP_GIPHY_API_KEY;
+  const apiUrlWithQueryString = giphyApiUrl + '/?' + queryString;
+
+  console.log('>>> giphyApiKey', process.env);
+  return await fetch(apiUrlWithQueryString, {
+    method: 'GET',
+    api_key: giphyApiKey,
+  });
+}
+
 function* handleLoadTrendingGiphyListRequested(action) {
   yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED));
   try {
     // const data = yield call(fetch(url));
+
+    const giphyApiUrl = process.env.REACT_APP_GIPHY_API_URL;
+
+    const list = fetchGiphyList(giphyApiUrl, 'limit=10');
+
+    console.log('>>> list', list);
+
     yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS, {
-      list: [],
+      list: list,
     }));
   } catch (error) {
     yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_ERROR, {
