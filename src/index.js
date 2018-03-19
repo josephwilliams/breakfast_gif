@@ -17,6 +17,9 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 // redux-saga
 import createSagaMiddleware from 'redux-saga';
 
+// redux-logger
+import logger from 'redux-logger';
+
 // redux
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -29,7 +32,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
   reducers,
-  applyMiddleware(sagaMiddleware)
+  applyMiddleware(sagaMiddleware, logger)
 );
 
 // then run the saga
