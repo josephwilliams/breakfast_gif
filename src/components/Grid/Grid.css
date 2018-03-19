@@ -19,4 +19,12 @@
 
 .gridContentWrapper {
   max-width: 720px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.gridCardWrapper {
+  padding: 10px;
 }

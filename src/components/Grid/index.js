@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Card from 'components/Card';
+
 import { ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED } from 'redux/actions/giphy.js';
 
 import { extractGiphyState } from 'redux/reducers/giphy.js';
@@ -59,7 +61,11 @@ class Grid extends Component {
           )
           : (
             <div className={'gridContentWrapper'}>
-              {'list'}
+              {list.map((listItem) => (
+                <div className={'gridCardWrapper'}>
+                  <Card data={listItem} key={listItem.id} />
+                </div>
+              ))}
             </div>
           )
         }
