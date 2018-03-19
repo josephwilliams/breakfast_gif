@@ -14,8 +14,7 @@ import './Grid.css';
 
 
 class Grid extends Component {
-  // NOTE: componentWillMount is really for server-side, but is called on browser-side too, I believe. Either way, because we're not server-side rendering, componentDidMount would work the same.
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED));
   }
 
@@ -23,8 +22,14 @@ class Grid extends Component {
     const {
       isLoadingList,
       listLoadError,
-      // list,
+      list,
     } = this.props;
+
+    console.log(
+      '>> isLoadingList', isLoadingList,
+      '>> list', list,
+      '>> error', listLoadError
+    );
 
     return (
       <div className={'gridWrapper'}>
@@ -50,14 +55,14 @@ class Grid extends Component {
 Grid.propTypes = {
   dispatch: PropTypes.func.isRequired,
   isLoadingList: PropTypes.bool.isRequired,
-  listLoadError: PropTypes.object,
+  listLoadError: PropTypes.bool.isRequired,
   list: PropTypes.array,
 };
 
 const GridConnected = connect(
   (globalState) => ({
     isLoadingList: extractGiphyState(globalState).isLoadingList,
-    listLoadError: extractGiphyState(globalState).listLoadError,
+    listLoadError: !!extractGiphyState(globalState).listLoadError,
     list: extractGiphyState(globalState).list,
   })
 )(Grid);
