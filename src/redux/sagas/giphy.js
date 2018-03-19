@@ -33,7 +33,7 @@ async function fetchGiphyList({ searchInput, favoriteGifIds, extraQueryStrings }
   let giphyApiUrl = process.env.REACT_APP_GIPHY_API_URL;
 
   // add query type (search, trending, or left blank for multi-gif query by ids)
-  const queryType = !!searchInput ? 'search' : !!favoriteGifIds ? '' : 'trending';
+  const queryType = !!searchInput ? '/search' : !!favoriteGifIds ? '' : '/trending';
   giphyApiUrl += queryType;
 
   // beginning of query strings
@@ -43,15 +43,15 @@ async function fetchGiphyList({ searchInput, favoriteGifIds, extraQueryStrings }
   const apiKeyQueryString = 'api_key=' + process.env.REACT_APP_GIPHY_API_KEY;
   giphyApiUrl += apiKeyQueryString;
 
-  // add search input if is search
-  if (searchInput) {
-    giphyApiUrl += `&q=${searchInput}`;
-  }
-
   // add favorite gif ids if on favorites page
   if (favoriteGifIds) {
     const favoriteGifIdsStr = favoriteGifIds.join(',');
     giphyApiUrl += `&ids=${favoriteGifIdsStr}`;
+  }
+
+  // add search input if is search
+  if (searchInput) {
+    giphyApiUrl += `&q=${searchInput}`;
   }
 
   // hard-coded 32 response limit
@@ -61,8 +61,6 @@ async function fetchGiphyList({ searchInput, favoriteGifIds, extraQueryStrings }
   if (extraQueryStrings) {
     giphyApiUrl += extraQueryStrings;
   }
-
-  console.log('>>> giphyApiUrl', giphyApiUrl);
 
   const res = await superagent.get(giphyApiUrl);
 
