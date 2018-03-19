@@ -31,9 +31,16 @@ class Grid extends Component {
       '>> error', listLoadError
     );
 
+    // TODO: Create error UI. For now, just showing loading UI if loading, error, or empty list.
+    const shouldShowLoadingUI = (
+      isLoadingList
+      || listLoadError
+      || (list && Array.isArray(list) && list.length == 0)
+    );
+
     return (
       <div className={'gridWrapper'}>
-        {isLoadingList || listLoadError
+        {shouldShowLoadingUI
           ? (
             <img
               src={loadingGif}

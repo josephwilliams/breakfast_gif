@@ -56,7 +56,7 @@ function* handleLoadTrendingGiphyListRequested(action) {
 
   Alternatively you may use takeLatest.
 
-  Does not allow concurrent fetches of user. If "ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED" gets
+  Does not allow concurrent fetches of data. If "ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED" gets
   dispatched while a fetch is already pending, that pending fetch is cancelled
   and only the latest one will be run.
 */
