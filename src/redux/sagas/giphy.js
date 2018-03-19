@@ -27,17 +27,34 @@ import {
 import makeAction from 'redux/utils.js';
 
 
-async function fetchGiphyList(isSearch = false, extraQueryStrings = '') {
+async function fetchGiphyList({ searchInput, extraQueryStrings }) {
   // TODO: This is sloppy. Clean this up. Pass query strings as options object with key/value pairs and then join them perhaps.
-  const queryType = isSearch ? 'search' : 'trending';
+  const queryType = !!searchInput ? 'search' : 'trending';
   const apiKeyQueryString = 'api_key=' + process.env.REACT_APP_GIPHY_API_KEY;
 
   let giphyApiUrl = process.env.REACT_APP_GIPHY_API_URL;
+
+  // add query type (search or trending)
   giphyApiUrl += queryType;
   giphyApiUrl += '?';
+
+  // add api_key
   giphyApiUrl += apiKeyQueryString;
+
+  // add search input if is search
+  if (searchInput) {
+    giphyApiUrl += `&q=${searchInput}`;
+  }
+
+  // hard-coded 32 response limit
   giphyApiUrl += '&limit=32';
-  giphyApiUrl += extraQueryStrings;
+
+  // add any extra query strings
+  if (extraQueryStrings) {
+    giphyApiUrl += extraQueryStrings;
+  }
+
+  console.log('>>> giphyApiUrl', giphyApiUrl);
 
   const res = await superagent.get(giphyApiUrl);
 
@@ -50,13 +67,11 @@ async function fetchGiphyList(isSearch = false, extraQueryStrings = '') {
 }
 
 function* handleLoadTrendingGiphyListRequested(action) {
-  console.log('>> action', action);
   yield put(makeAction(ACTION_LOAD_GIPHY_LIST_STARTED));
   try {
     const searchInput = lodashGet(action, 'payload.searchInput');
-    const isSearch = !!searchInput;
 
-    const list = yield fetchGiphyList(isSearch, searchInput);
+    const list = yield fetchGiphyList({ searchInput });
 
     yield put(makeAction(ACTION_LOAD_GIPHY_LIST_SUCCESS, {
       list: list,
