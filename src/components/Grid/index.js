@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED } from 'redux/actions/giphy.js';
 
+import { extractGiphyState } from 'redux/reducers/giphy.js';
+
 import loadingGif from 'assets/images/moving_breakfast.gif';
 
 import makeAction from 'redux/utils.js';
@@ -19,15 +21,28 @@ class Grid extends Component {
   }
 
   render() {
+    const {
+      isLoadingList,
+      listLoadError,
+      list,
+    } = this.props;
+
     return (
       <div className={'gridWrapper'}>
-        <img
-          src={loadingGif}
-          className={'loadingIcon'}
-          alt={'loading...'}
-        />
-        <div className={'gridContentWrapper'}>
-        </div>
+        {isLoadingList
+          ? (
+            <img
+              src={loadingGif}
+              className={'loadingIcon'}
+              alt={'loading...'}
+            />
+          )
+          : (
+            <div className={'gridContentWrapper'}>
+              {'list'}
+            </div>
+          )
+        }
       </div>
     );
   }
@@ -35,8 +50,17 @@ class Grid extends Component {
 
 Grid.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  isLoadingList: PropTypes.bool.isRequired,
+  listLoadError: PropTypes.object,
+  list: PropTypes.array,
 };
 
-const GridConnected = connect()(Grid);
+const GridConnected = connect(
+  (globalState) => ({
+    isLoadingList: extractGiphyState(globalState).isLoadingList,
+    listLoadError: extractGiphyState(globalState).listLoadError,
+    list: extractGiphyState(globalState).list,
+  })
+)(Grid);
 
 export default GridConnected;

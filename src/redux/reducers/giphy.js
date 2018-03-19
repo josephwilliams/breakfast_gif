@@ -13,11 +13,11 @@ const initialState = {
   list: [],
   isLoadingList: false,
   isLoadedList: false,
-  listLoadError: false,
+  listLoadError: null,
 };
 
 // state selectors
-export function extractState(globalState) {
+export function extractGiphyState(globalState) {
   return (globalState[STORE_KEY] || initialState);
 }
 
@@ -29,7 +29,7 @@ function giphyReducer(state = initialState, action) {
         ...state,
         isLoadingList: true,
         isLoadedList: false,
-        listLoadError: false,
+        listLoadError: null,
       };
 
     case ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS:
