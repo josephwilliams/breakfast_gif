@@ -14,8 +14,17 @@ import './Grid.css';
 
 
 class Grid extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED));
+  }
+
+  shouldComponentUpdate(nextProps) {
+    console.log('>> shouldComponentUpdate', this.props === nextProps);
+    return this.props !== nextProps;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('>>>>>>>>>>>> componentWillReceiveProps PROPS', nextProps);
   }
 
   render() {
@@ -26,7 +35,7 @@ class Grid extends Component {
     } = this.props;
 
     console.log(
-      '>> isLoadingList', isLoadingList,
+      '>> isLoadingList', this.props.isLoadingList,
       '>> list', list,
       '>> error', listLoadError
     );
@@ -35,7 +44,7 @@ class Grid extends Component {
     const shouldShowLoadingUI = (
       isLoadingList
       || listLoadError
-      || (list && Array.isArray(list) && list.length == 0)
+      || (list && Array.isArray(list) && list.length === 0)
     );
 
     return (
@@ -67,11 +76,15 @@ Grid.propTypes = {
 };
 
 const GridConnected = connect(
-  (globalState) => ({
-    isLoadingList: extractGiphyState(globalState).isLoadingList,
-    listLoadError: !!extractGiphyState(globalState).listLoadError,
-    list: extractGiphyState(globalState).list,
-  })
+  (globalState) => {
+    console.log('>> globalState', globalState, globalState.giphyReducer);
+    return {
+      isLoadingList: extractGiphyState(globalState).isLoadingList,
+      listLoadError: !!extractGiphyState(globalState).listLoadError,
+      list: extractGiphyState(globalState).list,
+    };
+  }
 )(Grid);
+
 
 export default GridConnected;
