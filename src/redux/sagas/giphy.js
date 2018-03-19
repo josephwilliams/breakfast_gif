@@ -1,8 +1,9 @@
 import {
-  call,
+  all,
+  // call,
   put,
   fork,
-  takeEvery,
+  // takeEvery,
   takeLatest,
 } from 'redux-saga/effects';
 
@@ -21,7 +22,9 @@ function* handleLoadTrendingGiphyListRequested(action) {
   yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED));
   try {
     // const data = yield call(fetch(url));
-    yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS));
+    yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS, {
+      list: [],
+    }));
   } catch (error) {
     yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_ERROR, {
       error: error,
@@ -55,9 +58,9 @@ function* watchLoadTrendingGiphyListRequested() {
 }
 
 function* giphySaga(...args) {
-  yield [
+  yield all([
     fork(watchLoadTrendingGiphyListRequested, ...args),
-  ];
+  ]);
 }
 
 export default giphySaga;
