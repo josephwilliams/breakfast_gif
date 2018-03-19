@@ -38,8 +38,11 @@
 }
 
 .headerLink {
-  padding: 5px 12px;
+  margin: 0 3px;
+  padding: 7px 12px;
   border-radius: 5px;
+  position: relative;
+  top: 1px;
   cursor: pointer;
 }
 

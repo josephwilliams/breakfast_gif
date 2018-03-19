@@ -1,7 +1,7 @@
 import {
-  ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED,
-  ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS,
-  ACTION_LOAD_TRENDING_GIPHY_LIST_ERROR,
+  ACTION_LOAD_GIPHY_LIST_STARTED,
+  ACTION_LOAD_GIPHY_LIST_SUCCESS,
+  ACTION_LOAD_GIPHY_LIST_ERROR,
 
   ACTION_ADD_GIF_TO_FAVORITES_SUCCESS,
   ACTION_ADD_GIF_TO_FAVORITES_ERROR,
@@ -46,7 +46,7 @@ export function extractFavoriteGiphyGifsList(globalState) {
 // reducer
 function giphyReducer(state = initialState, action) {
   switch (action.type) {
-    case ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED:
+    case ACTION_LOAD_GIPHY_LIST_STARTED:
       return {
         ...state,
         isLoadingList: true,
@@ -54,7 +54,7 @@ function giphyReducer(state = initialState, action) {
         listLoadError: null,
       };
 
-    case ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS:
+    case ACTION_LOAD_GIPHY_LIST_SUCCESS:
       return {
         ...state,
         list: action.payload.list,
@@ -62,7 +62,7 @@ function giphyReducer(state = initialState, action) {
         isLoadedList: true,
       };
 
-    case ACTION_LOAD_TRENDING_GIPHY_LIST_ERROR:
+    case ACTION_LOAD_GIPHY_LIST_ERROR:
       return {
         ...state,
         isLoadingList: false,

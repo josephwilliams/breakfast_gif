@@ -9,10 +9,10 @@ import {
 import superagent from 'superagent';
 
 import {
-  ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED,
-  ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED,
-  ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS,
-  ACTION_LOAD_TRENDING_GIPHY_LIST_ERROR,
+  ACTION_LOAD_GIPHY_LIST_REQUESTED,
+  ACTION_LOAD_GIPHY_LIST_STARTED,
+  ACTION_LOAD_GIPHY_LIST_SUCCESS,
+  ACTION_LOAD_GIPHY_LIST_ERROR,
 
   ACTION_LOAD_GIPHY_SEARCH_RESULTS_LIST_REQUESTED,
 
@@ -43,17 +43,17 @@ async function fetchGiphyList(giphyApiUrl, queryString = '') {
 
 function* handleLoadTrendingGiphyListRequested(action) {
   console.log('>> action', action);
-  yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED));
+  yield put(makeAction(ACTION_LOAD_GIPHY_LIST_STARTED));
   try {
     const giphyApiUrl = process.env.REACT_APP_GIPHY_API_URL;
 
     const list = yield fetchGiphyList(giphyApiUrl);
 
-    yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS, {
+    yield put(makeAction(ACTION_LOAD_GIPHY_LIST_SUCCESS, {
       list: list,
     }));
   } catch (error) {
-    yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_ERROR, {
+    yield put(makeAction(ACTION_LOAD_GIPHY_LIST_ERROR, {
       error: error,
     }));
   }
@@ -86,13 +86,13 @@ function* handleAddGifToFavoritesRequested(action) {
 
   Alternatively you may use takeLatest.
 
-  Does not allow concurrent fetches of data. If "ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED" gets
+  Does not allow concurrent fetches of data. If "ACTION_LOAD_GIPHY_LIST_REQUESTED" gets
   dispatched while a fetch is already pending, that pending fetch is cancelled
   and only the latest one will be run.
 */
 function* watchLoadTrendingGiphyListRequested() {
   yield takeLatest(
-    ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED,
+    ACTION_LOAD_GIPHY_LIST_REQUESTED,
     handleLoadTrendingGiphyListRequested
   );
 }

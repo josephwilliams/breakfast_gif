@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Card from 'components/Card';
 import GifModal from 'components/GifModal';
 
-import { ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED } from 'redux/actions/giphy.js';
+import { ACTION_LOAD_GIPHY_LIST_REQUESTED } from 'redux/actions/giphy.js';
 
 import {
   extractGiphyStateIsLoadingList,
@@ -31,7 +31,7 @@ class Grid extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED));
+    this.props.dispatch(makeAction(ACTION_LOAD_GIPHY_LIST_REQUESTED));
   }
 
   openModal = (gifId) => {
