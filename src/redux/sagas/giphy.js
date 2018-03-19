@@ -2,7 +2,7 @@ import {
   all,
   put,
   fork,
-  // takeEvery,
+  takeEvery,
   takeLatest,
 } from 'redux-saga/effects';
 
@@ -13,6 +13,11 @@ import {
   ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED,
   ACTION_LOAD_TRENDING_GIPHY_LIST_SUCCESS,
   ACTION_LOAD_TRENDING_GIPHY_LIST_ERROR,
+
+  ACTION_ADD_GIF_TO_FAVORITES_REQUESTED,
+  ACTION_ADD_GIF_TO_FAVORITES_STARTED,
+  ACTION_ADD_GIF_TO_FAVORITES_SUCCESS,
+  ACTION_ADD_GIF_TO_FAVORITES_ERROR,
 } from 'redux/actions/giphy.js';
 
 import makeAction from 'redux/utils.js';
@@ -34,7 +39,7 @@ async function fetchGiphyList(giphyApiUrl, queryString = '') {
   }
 }
 
-function* handleLoadTrendingGiphyListRequested(action) {
+function* handleLoadTrendingGiphyListRequested() {
   yield put(makeAction(ACTION_LOAD_TRENDING_GIPHY_LIST_STARTED));
   try {
     const giphyApiUrl = process.env.REACT_APP_GIPHY_API_URL;
@@ -51,7 +56,29 @@ function* handleLoadTrendingGiphyListRequested(action) {
   }
 }
 
+function* handleAddGifToFavoritesRequested(action) {
+  // NOTE: the _STARTED action could be used to prevent subsequent actions (i.e. clicks) that use same giphy ID, or to prevent the same id from being added to favorites list.
+  // TODO: add checks for the above conditions, prevent continuation of saga if so.
+
+  const gifId = action.payload.gifId;
+
+  yield put(makeAction(ACTION_ADD_GIF_TO_FAVORITES_STARTED, {
+    gifId: gifId,
+  }));
+  try {
+    yield put(makeAction(ACTION_ADD_GIF_TO_FAVORITES_SUCCESS, {
+      gifId: gifId,
+    }));
+  } catch (error) {
+    yield put(makeAction(ACTION_ADD_GIF_TO_FAVORITES_ERROR, {
+      error: error,
+    }));
+  }
+}
+
 /*
+  from redux-saga docs:
+
   takeEvery allows concurrent fetches.
 
   Alternatively you may use takeLatest.
@@ -67,9 +94,14 @@ function* watchLoadTrendingGiphyListRequested() {
   );
 }
 
+function* watchAddGifToFavoritesRequested() {
+  yield takeEvery(ACTION_ADD_GIF_TO_FAVORITES_REQUESTED, handleAddGifToFavoritesRequested);
+}
+
 function* giphySaga(...args) {
   yield all([
     fork(watchLoadTrendingGiphyListRequested, ...args),
+    fork(watchAddGifToFavoritesRequested, ...args),
   ]);
 }
 
