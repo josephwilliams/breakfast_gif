@@ -52,20 +52,11 @@ function* handleLoadTrendingGiphyListRequested(action) {
 }
 
 /*
-  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
-  Allows concurrent fetches of user.
-*/
-// function* mySaga() {
-//   yield takeEvery(
-//     ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED,
-//     handleLoadTrendingGiphyListRequested
-//   );
-// }
+  takeEvery allows concurrent fetches.
 
-/*
   Alternatively you may use takeLatest.
 
-  Does not allow concurrent fetches of user. If "USER_FETCH_REQUESTED" gets
+  Does not allow concurrent fetches of user. If "ACTION_LOAD_TRENDING_GIPHY_LIST_REQUESTED" gets
   dispatched while a fetch is already pending, that pending fetch is cancelled
   and only the latest one will be run.
 */
